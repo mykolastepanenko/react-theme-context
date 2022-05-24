@@ -1,20 +1,33 @@
 import { createContext, useContext, useState } from "react";
 import { config } from "./config";
+// localStorage.clear();
+const defaultTheme = () => {
+  const theme = JSON.parse(localStorage.getItem("theme"));
 
-const defaultTheme = config.dark;
+  if (theme === null) {
+    localStorage.setItem("theme", JSON.stringify(config.dark));
 
-const ThemeContext = createContext(defaultTheme);
+    return config.dark;
+  }
+
+  return theme;
+};
+
+const ThemeContext = createContext(defaultTheme());
 
 export const useTheme = () => useContext(ThemeContext);
 
 export const ThemeProvider = ({ children }) => {
-  const [theme, setTheme] = useState(defaultTheme);
+  const [theme, setTheme] = useState(() => defaultTheme());
 
   const changeTheme = (isLight) => {
-    // if (theme === config.dark) setTheme(config.light);
-    // else setTheme(config.dark);
-    if (isLight) setTheme(config.light);
-    else setTheme(config.dark);
+    if (isLight) {
+      localStorage.setItem("theme", JSON.stringify(config.light));
+      setTheme(config.light);
+    } else {
+      localStorage.setItem("theme", JSON.stringify(config.dark));
+      setTheme(config.dark);
+    }
   };
 
   return (
