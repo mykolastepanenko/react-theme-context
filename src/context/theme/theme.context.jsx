@@ -5,7 +5,10 @@ const defaultTheme = () => {
   const theme = JSON.parse(localStorage.getItem("theme"));
 
   if (theme === null) {
-    localStorage.setItem("theme", JSON.stringify(config.dark));
+    localStorage.setItem(
+      "theme",
+      JSON.stringify({ styles: config.dark, theme: "dark" })
+    );
 
     return config.dark;
   }
@@ -22,11 +25,17 @@ export const ThemeProvider = ({ children }) => {
 
   const changeTheme = (isLight) => {
     if (isLight) {
-      localStorage.setItem("theme", JSON.stringify(config.light));
-      setTheme(config.light);
+      localStorage.setItem(
+        "theme",
+        JSON.stringify({ styles: config.light, theme: "light" })
+      );
+      setTheme({ styles: config.light, theme: "light" });
     } else {
-      localStorage.setItem("theme", JSON.stringify(config.dark));
-      setTheme(config.dark);
+      localStorage.setItem(
+        "theme",
+        JSON.stringify({ styles: config.dark, theme: "dark" })
+      );
+      setTheme({ styles: config.dark, theme: "dark" });
     }
   };
 

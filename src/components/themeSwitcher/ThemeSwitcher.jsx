@@ -4,9 +4,11 @@ import ReactSwitch from "react-switch";
 import { useTheme } from "../../context/theme/theme.context";
 
 const ThemeSwitcher = () => {
-  const { changeTheme } = useTheme();
+  const { theme, changeTheme } = useTheme();
 
-  const [checked, setChecked] = useState(false);
+  const [checked, setChecked] = useState(
+    theme.theme === "light" ? true : false
+  );
 
   const switcherProps = {
     checked,
